@@ -3,48 +3,23 @@ using System.Collections;
 
 public class ControlProbe : MonoBehaviour {
 
-	public GameObject plane;
-	public GameObject character;
-	public float offset;
-	public Direction directionFaced;
+	public GameObject characterBody;
+	public GameObject characterCamera;
 
-	public enum Direction{
-		x, y, z
-	}
-
-	void Update () {
-		if(directionFaced == Direction.x){
-			offset = plane.transform.position.x - character.transform.position.x;
+	void FixedUpdate () {
+		// Get distance to the floor
+		RaycastHit hit;
+		if(Physics.Raycast(characterBody.transform.position, Vector3.down, out hit)){
+			float ground_height = hit.point.y;
+			float distance_to_ground = characterCamera.transform.position.y - ground_height;
 
 			Vector3 new_position = new Vector3(
-				plane.transform.position.x + offset,
-				character.transform.position.y,
-				character.transform.position.z
-			);
-
-			transform.position = new_position;
-		} else if(directionFaced == Direction.y){
-			offset = plane.transform.position.y - character.transform.position.y;
-
-			Vector3 new_position = new Vector3(
-				character.transform.position.x,
-				plane.transform.position.y + offset,
-				character.transform.position.z
-			);
-
-			transform.position = new_position;
-		} else if(directionFaced == Direction.z){
-			offset = plane.transform.position.z - character.transform.position.z;
-
-			Vector3 new_position = new Vector3(
-				character.transform.position.x,
-				character.transform.position.y,
-				plane.transform.position.z + offset
+				characterCamera.transform.position.x,
+				hit.point.y - distance_to_ground,
+				characterCamera.transform.position.z
 			);
 
 			transform.position = new_position;
 		}
-
-
 	}
 }
