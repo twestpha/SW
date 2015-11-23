@@ -117,6 +117,10 @@
       <Project>{E091DFD9-D0B8-A49E-C3AC-12C60D7C468F}</Project>
       <Name>star_wars_ships.CSharp.Plugins</Name>
     </ProjectReference>
+    <ProjectReference Include="star_wars_ships.CSharp.csproj">
+      <Project>{A08F4D11-DFC1-A1CA-9B54-B6974217A22B}</Project>
+      <Name>star_wars_ships.CSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" />
