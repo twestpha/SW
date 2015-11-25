@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ElevatorController.cs" />
+    <Compile Include="Assets\Scripts\PlayerInteractionController.cs" />
     <Compile Include="Assets\Scripts\Reflection\ControlProbe.cs" />
   </ItemGroup>
   <ItemGroup>
