@@ -22,6 +22,8 @@ public class PlayerInteractionController : MonoBehaviour {
 			if(interactableObject){
 				Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
 
+
+
 				Vector3 hitPoint = transform.position + (ray.direction * hitDistance);
 				Vector3 newPosition = hitPoint + hitPointOffset;
 
@@ -37,7 +39,7 @@ public class PlayerInteractionController : MonoBehaviour {
 						interactableObject = hit.collider.gameObject;
 
 						interactableObject.GetComponent<Rigidbody>().useGravity = false;
-
+						interactableObject.GetComponent<Rigidbody>().isKinematic = true;
 						hitDistance = hit.distance;
 						hitPointOffset = interactableObject.transform.position - hit.point;
 					}
@@ -45,7 +47,7 @@ public class PlayerInteractionController : MonoBehaviour {
 			}
 		} else if(interactableObject){
 			print("Dropped it!");
-
+			interactableObject.GetComponent<Rigidbody>().isKinematic = false;
 			interactableObject.GetComponent<Rigidbody>().useGravity = true;
 			interactableObject = null;
 		}
