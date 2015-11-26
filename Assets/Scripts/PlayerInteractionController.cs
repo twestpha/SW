@@ -4,11 +4,10 @@ using System.Collections;
 public class PlayerInteractionController : MonoBehaviour {
 
 	public float pickupDistance;
-	public float movementResistance;
 
 	private GameObject interactableObject;
-	Vector3 hitPointOffset;
-	float hitDistance;
+	private float hitDistance;
+	private float hitBuffer = 1.0f;
 
 	void Start () {
 	}
@@ -20,16 +19,25 @@ public class PlayerInteractionController : MonoBehaviour {
 	void HandleInteractions(){
 		if(Input.GetMouseButton(0)){
 			if(interactableObject){
-				Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+				Ray viewRay = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+				// RaycastHit hit;
 
-
-
-				Vector3 hitPoint = transform.position + (ray.direction * hitDistance);
-				Vector3 newPosition = hitPoint + hitPointOffset;
+				Vector3 newPosition = viewRay.direction * hitDistance;
 
 				Debug.DrawRay(transform.position, newPosition - transform.position, Color.red);
 
-				interactableObject.transform.position  = newPosition;
+				// if(Physics.Raycast(transform.position, newPosition - transform.position, out hit, hitDistance) && hit.collider.gameObject != interactableObject){
+					// Our object needs to be moved back along the ray
+				//
+				// 	Vector3 hitPoint = transform.position + (ray.direction * (hit.distance - hitBuffer));
+				// 	Vector3 newPosition = hitPoint + hitPointOffset;
+				//
+					// interactableObject.transform.position  = newPosition;
+				// } else {
+				// 	Debug.DrawRay(transform.position, (newPosition - transform.position).normalized * (hitDistance + hitBuffer), Color.green);
+				// 	// We're hot to trot
+				// 	// interactableObject.transform.position  = newPosition;
+				// }
 			} else {
 				Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
 				RaycastHit hit;
@@ -40,8 +48,9 @@ public class PlayerInteractionController : MonoBehaviour {
 
 						interactableObject.GetComponent<Rigidbody>().useGravity = false;
 						interactableObject.GetComponent<Rigidbody>().isKinematic = true;
-						hitDistance = hit.distance;
-						hitPointOffset = interactableObject.transform.position - hit.point;
+
+						hitDistance = (interactableObject.transform.position - transform.position).magnitude;
+						Debug.DrawRay(transform.position, interactableObject.transform.position - transform.position, Color.green);
 					}
 				}
 			}
