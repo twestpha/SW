@@ -51,8 +51,7 @@ public class ElevatorController : MonoBehaviour {
 	void getInteraction(){
 		if(Input.GetMouseButtonDown(0)){
 			RaycastHit hit;
-			// TODO fix this to be camera ray, not mouse input
-			Ray click_ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			Ray click_ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
 
 			if(Physics.Raycast(click_ray, out hit, RAYCAST_LENGTH)){
 				if(hit.collider.gameObject == upButton){
