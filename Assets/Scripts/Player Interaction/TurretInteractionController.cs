@@ -7,8 +7,6 @@ public class TurretInteractionController : MonoBehaviour {
 	public GameObject turretCamera;
 	public GameObject playerCamera;
 
-	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
-    public RotationAxes axes = RotationAxes.MouseXAndY;
     public float sensitivityX = 15F;
     public float sensitivityY = 15F;
 
@@ -18,7 +16,9 @@ public class TurretInteractionController : MonoBehaviour {
     public float minimumY = -60F;
     public float maximumY = 60F;
 
-    float rotationY = 0F;
+	public float trackingSpeed;
+
+    private float rotationY = 0.0f;
 
 	private float RAYCAST_LENGTH = 10.0f;
 	private bool playerInTurret;
@@ -42,29 +42,19 @@ public class TurretInteractionController : MonoBehaviour {
 			}
 		}
 
-
+		if(Input.GetKey("q") && playerInTurret == true){
+			turretCamera.GetComponent<Camera>().enabled = false;
+			playerCamera.GetComponent<Camera>().enabled = true;
+			playerInTurret = false;
+		}
 
 		if(playerInTurret){
-			if (axes == RotationAxes.MouseXAndY)
-	        {
-	            float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
+            float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
 
-	            rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
-	            rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
+            rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
+            rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
 
-	            transform.localEulerAngles = new Vector3(0, rotationX, rotationY);
-	        }
-	        else if (axes == RotationAxes.MouseX)
-	        {
-	            transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX, 0);
-	        }
-	        else
-	        {
-	            rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
-	            rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
-
-	            transform.localEulerAngles = new Vector3(0, transform.localEulerAngles.y, rotationY);
-	        }
+            transform.localEulerAngles = new Vector3(0, rotationX, rotationY);
 		}
 	}
 }
