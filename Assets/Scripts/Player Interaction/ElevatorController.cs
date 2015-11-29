@@ -49,7 +49,7 @@ public class ElevatorController : MonoBehaviour {
 	}
 
 	void getInteraction(){
-		if(Input.GetMouseButtonDown(0)){
+		if(Input.GetMouseButtonDown(0) && playerInElevator){
 			RaycastHit hit;
 			Ray click_ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
 
