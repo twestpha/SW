@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Player Interaction\ElevatorController.cs" />
+    <Compile Include="Assets\Scripts\Player Interaction\FirstPersonMouseFixes.cs" />
     <Compile Include="Assets\Scripts\Player Interaction\PlayerInteractionController.cs" />
     <Compile Include="Assets\Scripts\Player Interaction\TurretInteractionController.cs" />
     <Compile Include="Assets\Scripts\Reflection\ControlProbe.cs" />
