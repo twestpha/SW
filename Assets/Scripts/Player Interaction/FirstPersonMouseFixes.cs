@@ -11,6 +11,7 @@ public class FirstPersonMouseFixes : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
+		// TODO still a little buggy
 		if(Input.GetKeyDown(KeyCode.Escape)){
 			lockedAndHidden = !lockedAndHidden;
 			setCursorState();

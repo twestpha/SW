@@ -18,6 +18,8 @@ public class TurretInteractionController : MonoBehaviour {
 
 	public float trackingSpeed;
 
+	private LineRenderer line;
+
     private float rotationY = 0.0f;
 
 	private float RAYCAST_LENGTH = 10.0f;
@@ -25,9 +27,13 @@ public class TurretInteractionController : MonoBehaviour {
 
 	void Start () {
 		playerInTurret = false;
+
+		line = gameObject.GetComponent<LineRenderer>();
+		line.enabled = false;
 	}
 
 	void FixedUpdate () {
+		// TODO clean up this
 		if(Input.GetMouseButtonDown(0) && playerInTurret == false){
 			RaycastHit hit;
 			Ray click_ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
@@ -40,6 +46,11 @@ public class TurretInteractionController : MonoBehaviour {
 					playerInTurret = true;
 				}
 			}
+		}
+
+		if(Input.GetMouseButtonDown(0) && playerInTurret == true){
+			// pew pew
+			// FireLaser();
 		}
 
 		if(Input.GetKey("q") && playerInTurret == true){
@@ -57,4 +68,6 @@ public class TurretInteractionController : MonoBehaviour {
             transform.localEulerAngles = new Vector3(0, rotationX, rotationY);
 		}
 	}
+
+
 }
