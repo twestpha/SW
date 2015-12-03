@@ -6,6 +6,9 @@ public class TurretInteractionController : MonoBehaviour {
 	public GameObject turretObject;
 	public GameObject turretCamera;
 	public GameObject playerCamera;
+	public GameObject gunEmitPoint;
+
+	public GameObject laserBolt;
 
     public float sensitivityX = 15F;
     public float sensitivityY = 15F;
@@ -16,7 +19,7 @@ public class TurretInteractionController : MonoBehaviour {
     public float minimumY = -60F;
     public float maximumY = 60F;
 
-	public float trackingSpeed;
+	public float shootSpeed;
 
     private float rotationY = 0.0f;
 
@@ -28,7 +31,7 @@ public class TurretInteractionController : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		// TODO clean up this
+		// TODO clean up this shit
 		if(Input.GetMouseButtonDown(0) && playerInTurret == false){
 			RaycastHit hit;
 			Ray click_ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
@@ -46,6 +49,12 @@ public class TurretInteractionController : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0) && playerInTurret == true){
 			// pew pew
 			// FireLaser();
+			GameObject bolt = Instantiate(laserBolt);
+			bolt.transform.rotation = transform.rotation;
+			bolt.transform.position = gunEmitPoint.transform.position;
+
+			bolt.GetComponent<Rigidbody>().velocity = bolt.transform.right * shootSpeed;
+			Destroy(bolt, 4.0f);
 		}
 
 		if(Input.GetKey("q") && playerInTurret == true){
