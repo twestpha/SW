@@ -3,13 +3,14 @@ using System.Collections;
 
 public class TurretInteractionController : MonoBehaviour {
 
-	public GameObject turretObject;
+	[Header("Game Objects")]
+	public GameObject turretObject; // Needs splitup into rotation
 	public GameObject turretCamera;
 	public GameObject playerCamera;
-	public GameObject gunEmitPoint;
-
+	public GameObject projectileEmissionPoint;
 	public GameObject laserBolt;
 
+	[Header("Turret Controls")]
     public float sensitivityX = 15F;
     public float sensitivityY = 15F;
 
@@ -19,14 +20,13 @@ public class TurretInteractionController : MonoBehaviour {
     public float minimumY = -60F;
     public float maximumY = 60F;
 
-	public float shootSpeed;
+	[Header("Firing Controls")]
+	public float projectileSpeed;
 	public float weaponCooldown;
-
-    private float rotationY = 0.0f;
 
 	private float RAYCAST_LENGTH = 10.0f;
 	private bool playerInTurret;
-
+	private float rotationY = 0.0f;
 	private float lastShotTime;
 
 	void Start () {
@@ -38,11 +38,11 @@ public class TurretInteractionController : MonoBehaviour {
 		if(Input.GetMouseButton(0) && playerInTurret == true && Time.time - lastShotTime > weaponCooldown){
 			GameObject bolt = Instantiate(laserBolt);
 			bolt.transform.rotation = transform.rotation;
-			bolt.transform.position = gunEmitPoint.transform.position;
+			bolt.transform.position = projectileEmissionPoint.transform.position;
 
 			lastShotTime = Time.time;
 
-			bolt.GetComponent<Rigidbody>().velocity = bolt.transform.right * shootSpeed;
+			bolt.GetComponent<Rigidbody>().velocity = bolt.transform.right * projectileSpeed;
 			Destroy(bolt, 2.0f);
 		}
 
