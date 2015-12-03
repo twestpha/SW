@@ -18,8 +18,6 @@ public class TurretInteractionController : MonoBehaviour {
 
 	public float trackingSpeed;
 
-	private LineRenderer line;
-
     private float rotationY = 0.0f;
 
 	private float RAYCAST_LENGTH = 10.0f;
@@ -27,9 +25,6 @@ public class TurretInteractionController : MonoBehaviour {
 
 	void Start () {
 		playerInTurret = false;
-
-		line = gameObject.GetComponent<LineRenderer>();
-		line.enabled = false;
 	}
 
 	void FixedUpdate () {

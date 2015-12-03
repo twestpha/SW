@@ -29,12 +29,14 @@ public class ElevatorController : MonoBehaviour {
 
 	void OnTriggerEnter(Collider collider){
 		if(collider.gameObject == player){
+			player.transform.parent = elevatorObject.transform;
 			playerInElevator = true;
 		}
 	}
 
 	void OnTriggerExit(Collider collider){
 		if(collider.gameObject == player){
+			player.transform.parent = null;
 			playerInElevator = false;
 		}
 	}
@@ -42,10 +44,6 @@ public class ElevatorController : MonoBehaviour {
 	void Update () {
 		getInteraction();
 		moveElevator();
-
-		if(playerInElevator){
-			player.transform.parent = elevatorObject.transform;
-		}
 	}
 
 	void getInteraction(){
