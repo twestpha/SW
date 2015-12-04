@@ -3,7 +3,13 @@ using System.Collections;
 
 public class FirstPersonMouseFixes : MonoBehaviour {
 
+	public GameObject laserBolt;
+	public GameObject ejectionPoint;
+	public float weaponCooldown;
+	public float projectileSpeed;
+
 	private bool lockedAndHidden;
+	private float lastShotTime;
 
 	void Start () {
 		lockedAndHidden = true;
@@ -15,6 +21,17 @@ public class FirstPersonMouseFixes : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.Escape)){
 			lockedAndHidden = !lockedAndHidden;
 			setCursorState();
+		}
+
+		if(Input.GetMouseButton(0) && Time.time - lastShotTime > weaponCooldown){
+			GameObject bolt = Instantiate(laserBolt);
+			bolt.transform.rotation = ejectionPoint.transform.rotation;
+			bolt.transform.position = ejectionPoint.transform.position;
+
+			lastShotTime = Time.time;
+
+			bolt.GetComponent<Rigidbody>().velocity = bolt.transform.right * projectileSpeed;
+			Destroy(bolt, 2.0f);
 		}
 	}
 
