@@ -25,10 +25,13 @@ public class TurretInteractionController : MonoBehaviour {
 	public float weaponCooldown;
 
 	// Private Variables
-	private float RAYCAST_LENGTH = 10.0f;
 	private bool playerInTurret;
 	private float rotationY = 0.0f;
 	private float lastShotTime;
+
+	// Constants
+	private const float INTERACTION_DISTANCE = 10.0f;
+	private Vector3 SCREEN_CENTER = new Vector3(0.5f, 0.5f, 0.0f);
 
 	void Start () {
 		playerInTurret = false;
@@ -36,19 +39,19 @@ public class TurretInteractionController : MonoBehaviour {
 
 	void FixedUpdate () {
 		if(playerInTurret){
-			handleRotation();
+			HandleRotation();
 
-			if(Input.GetMouseButton(0) && canFireWeapon()){
-				fireWeapon();
+			if(Input.GetMouseButton(0) && CanFireWeapon()){
+				FireWeapon();
 			}
 		}
 
-		if(Input.GetMouseButtonDown(0) && playerInTurret == false && playerClickedOnTurret()){
-			enterTurret();
+		if(Input.GetMouseButtonDown(0) && playerInTurret == false && TurretInInteractableRange() ){
+			EnterTurret();
 		}
 
 		if(Input.GetKey("q") && playerInTurret == true){
-			exitTurret();
+			ExitTurret();
 		}
 	}
 
@@ -56,7 +59,7 @@ public class TurretInteractionController : MonoBehaviour {
 	// Actions
 	//####################################################################
 
-	void fireWeapon(){
+	void FireWeapon(){
 		GameObject bolt = Instantiate(laserBolt);
 		bolt.transform.rotation = transform.rotation;
 		bolt.transform.position = projectileEmissionPoint.transform.position;
@@ -67,22 +70,22 @@ public class TurretInteractionController : MonoBehaviour {
 		Destroy(bolt, 2.0f);
 	}
 
-	void enterTurret(){
+	void EnterTurret(){
 		lastShotTime = Time.time;
 		playerInTurret = true;
-		setPlayerLocation();
+		SetPlayerLocation();
 	}
 
-	void exitTurret(){
+	void ExitTurret(){
 		playerInTurret = false;
-		setPlayerLocation();
+		SetPlayerLocation();
 	}
 
 	//####################################################################
 	// Handlers
 	//####################################################################
 
-	void handleRotation(){
+	void HandleRotation(){
 		float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
 
 		rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
@@ -95,17 +98,17 @@ public class TurretInteractionController : MonoBehaviour {
 	// Queries
 	//####################################################################
 
-	bool playerClickedOnTurret(){
+	bool TurretInInteractableRange(){
 		RaycastHit hit;
-		Ray click_ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+		Ray click_ray = Camera.main.ViewportPointToRay(SCREEN_CENTER);
 
-		if(Physics.Raycast(click_ray, out hit, RAYCAST_LENGTH)){
+		if(Physics.Raycast(click_ray, out hit, INTERACTION_DISTANCE)){
 			return hit.collider.gameObject == turretObject;
 		}
 		return false;
 	}
 
-	bool canFireWeapon(){
+	bool CanFireWeapon(){
 		return Time.time - lastShotTime > weaponCooldown;
 	}
 
@@ -113,7 +116,7 @@ public class TurretInteractionController : MonoBehaviour {
 	// Helper Functions
 	//####################################################################
 
-	void setPlayerLocation(){
+	void SetPlayerLocation(){
 		turretCamera.GetComponent<Camera>().enabled = playerInTurret;
 		playerCamera.GetComponent<Camera>().enabled = !playerInTurret;
 	}
