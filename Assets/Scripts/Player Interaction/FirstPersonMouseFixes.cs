@@ -5,6 +5,7 @@ public class FirstPersonMouseFixes : MonoBehaviour {
 
 	public GameObject laserBolt;
 	public GameObject ejectionPoint;
+	public bool hasWeapon;
 	public float weaponCooldown;
 	public float projectileSpeed;
 
@@ -23,7 +24,7 @@ public class FirstPersonMouseFixes : MonoBehaviour {
 			setCursorState();
 		}
 
-		if(Input.GetMouseButton(0) && Time.time - lastShotTime > weaponCooldown){
+		if(Input.GetMouseButton(0) && hasWeapon && Time.time - lastShotTime > weaponCooldown){
 			GameObject bolt = Instantiate(laserBolt);
 			bolt.transform.rotation = ejectionPoint.transform.rotation;
 			bolt.transform.position = ejectionPoint.transform.position;

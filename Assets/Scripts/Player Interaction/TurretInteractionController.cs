@@ -7,6 +7,7 @@ public class TurretInteractionController : MonoBehaviour {
 	public GameObject turretObject; // Needs splitup into rotation
 	public GameObject turretCamera;
 	public GameObject playerCamera;
+	public GameObject playerObject;
 	public GameObject projectileEmissionPoint;
 	public GameObject laserBolt;
 

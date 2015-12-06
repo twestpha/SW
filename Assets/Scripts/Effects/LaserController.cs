@@ -12,7 +12,7 @@ public class LaserController : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision){
-        if(collision.gameObject.tag == "Interior (Collider)"){
+        if(collision.gameObject.tag == "Laser Collider"){
 			GameObject particles = Instantiate(particleSystemHit);
 			particles.transform.position = transform.position;
 
