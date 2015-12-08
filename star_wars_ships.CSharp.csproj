@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="Assets\DecalSystem\DecalSystem\Decal.cs" />
     <Compile Include="Assets\Scripts\Effects\LaserController.cs" />
+    <Compile Include="Assets\Scripts\Effects\LaserKernelController.cs" />
     <Compile Include="Assets\Scripts\Player Interaction\ArquitensTurretInteractionController.cs" />
     <Compile Include="Assets\Scripts\Player Interaction\ElevatorController.cs" />
     <Compile Include="Assets\Scripts\Player Interaction\FirstPersonMouseFixes.cs" />

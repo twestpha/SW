@@ -17,6 +17,7 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 
 	[Header("Instantiation Objects")]
 	public GameObject laserBolt;
+	public GameObject laserKernel;
 	public GameObject lightFlash;
 
 	[Header("Turret Controls")]
@@ -32,6 +33,7 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 	[Header("Firing Controls")]
 	public float projectileSpeed;
 	public float weaponCooldown;
+	public float recoilAmount = 0.2f;
 
 	// Private Variables
 	private bool playerInTurret;
@@ -119,14 +121,14 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 			float percentTimeElapsed = (Time.time - lastShotTime) / weaponCooldown;
 
 			Vector3 newPosition = new Vector3(
-				primaryGunOriginalPosition.x - (0.1f * Mathf.Sin(percentTimeElapsed * Mathf.PI)),
+				primaryGunOriginalPosition.x - (recoilAmount * Mathf.Sin(2.0f * percentTimeElapsed * Mathf.PI)),
 				primaryGunOriginalPosition.y,
 				primaryGunOriginalPosition.z
 			);
 
 			primaryGunObject.transform.localPosition = newPosition;
 
-			recoiling = !CanFireWeapon();
+			recoiling = percentTimeElapsed < 0.5f;
 		}
 		if(!recoiling){
 			primaryGunObject.transform.localPosition = primaryGunOriginalPosition;
@@ -189,12 +191,37 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 		GameObject lightFlashA = Instantiate(lightFlash);
 		GameObject lightFlashB = Instantiate(lightFlash);
 
+		GameObject laserKernelA = Instantiate(laserKernel);
+		GameObject laserKernelB = Instantiate(laserKernel);
+
 		if(useUpperEmitPoints){
+			// Initial Position
 			lightFlashA.transform.position = upperPrimaryEmissionPoints[0].transform.position;
 			lightFlashB.transform.position = upperPrimaryEmissionPoints[1].transform.position;
+
+			laserKernelA.transform.position = upperPrimaryEmissionPoints[0].transform.position;
+			laserKernelB.transform.position = upperPrimaryEmissionPoints[1].transform.position;
+
+			// Parenting
+			lightFlashA.transform.parent = upperPrimaryEmissionPoints[0].transform;
+			lightFlashB.transform.parent = upperPrimaryEmissionPoints[1].transform;
+
+			laserKernelA.transform.parent = upperPrimaryEmissionPoints[0].transform;
+			laserKernelB.transform.parent = upperPrimaryEmissionPoints[1].transform;
 		} else {
+			// Initial Position
 			lightFlashA.transform.position = lowerPrimaryEmissionPoints[0].transform.position;
 			lightFlashB.transform.position = lowerPrimaryEmissionPoints[1].transform.position;
+
+			laserKernelA.transform.position = lowerPrimaryEmissionPoints[0].transform.position;
+			laserKernelB.transform.position = lowerPrimaryEmissionPoints[1].transform.position;
+
+			// Parenting
+			lightFlashA.transform.parent = lowerPrimaryEmissionPoints[0].transform;
+			lightFlashB.transform.parent = lowerPrimaryEmissionPoints[1].transform;
+
+			laserKernelA.transform.parent = lowerPrimaryEmissionPoints[0].transform;
+			laserKernelB.transform.parent = lowerPrimaryEmissionPoints[1].transform;
 		}
 
 		Destroy(lightFlashA, 0.1f);
