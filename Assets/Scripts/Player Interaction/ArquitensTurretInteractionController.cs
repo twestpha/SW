@@ -7,10 +7,10 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 	public GameObject playerCamera;
 	public GameObject playerObject;
 
-
 	[Header("Primary Turret")]
 	public GameObject primaryTurretObject; // Needs splitup into rotation
 	public GameObject primaryGunObject;
+	public GameObject primaryCameraParent;
 	public GameObject primaryTurretCamera;
 	public GameObject[] upperPrimaryEmissionPoints;
 	public GameObject[] lowerPrimaryEmissionPoints;
@@ -32,6 +32,7 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 
 	[Header("Firing Controls")]
 	public float projectileSpeed;
+	public float rangeInMeters;
 	public float weaponCooldown;
 	public float recoilAmount = 0.2f;
 
@@ -59,9 +60,8 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 	}
 
 	void FixedUpdate () {
-		handleRecoil();
-
 		if(playerInTurret){
+			handleRecoil();
 			HandleRotation();
 
 			if(Input.GetMouseButton(0) && CanFireWeapon()){
@@ -114,16 +114,19 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 
 		primaryTurretObject.transform.localEulerAngles = new Vector3(270, rotationX, 0);
 		primaryGunObject.transform.localEulerAngles = new Vector3(0, rotationY, 0);
+		primaryCameraParent.transform.localEulerAngles = new Vector3(0, rotationY, 0);
 	}
 
 	void handleRecoil(){
 		if(recoiling){
 			float percentTimeElapsed = (Time.time - lastShotTime) / weaponCooldown;
 
+			float recoil_distance = (recoilAmount * Mathf.Sin(2.0f * percentTimeElapsed * Mathf.PI));
+
 			Vector3 newPosition = new Vector3(
-				primaryGunOriginalPosition.x - (recoilAmount * Mathf.Sin(2.0f * percentTimeElapsed * Mathf.PI)),
+				primaryGunOriginalPosition.x - (recoil_distance * Mathf.Cos(Mathf.Deg2Rad * rotationY)),
 				primaryGunOriginalPosition.y,
-				primaryGunOriginalPosition.z
+				primaryGunOriginalPosition.z + (recoil_distance * Mathf.Sin(Mathf.Deg2Rad * rotationY))
 			);
 
 			primaryGunObject.transform.localPosition = newPosition;
@@ -183,8 +186,8 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 		boltA.GetComponent<Rigidbody>().velocity = boltA.transform.right * projectileSpeed;
 		boltB.GetComponent<Rigidbody>().velocity = boltB.transform.right * projectileSpeed;
 
-		Destroy(boltA, 2.0f);
-		Destroy(boltB, 2.0f);
+		Destroy(boltA, rangeInMeters * (1 / projectileSpeed));
+		Destroy(boltB, rangeInMeters * (1 / projectileSpeed));
 	}
 
 	void flashLights(){
