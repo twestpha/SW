@@ -100,6 +100,7 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 	void ExitTurret(){
 		playerInTurret = false;
 		SetPlayerLocation();
+		recoiling = false;
 	}
 
 	//####################################################################

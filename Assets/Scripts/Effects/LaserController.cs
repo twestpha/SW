@@ -3,15 +3,17 @@ using System.Collections;
 
 public class LaserController : MonoBehaviour {
 
-	public GameObject particleSystemHit;
+	public GameObject[] particleSystemHits;
 
 	void OnCollisionEnter(Collision collision){
         if(collision.gameObject.tag == "Laser Collider"){
-			GameObject particles = Instantiate(particleSystemHit);
-			particles.transform.position = transform.position;
+			for(int i = 0; i < particleSystemHits.Length; ++i){
+				GameObject particles = Instantiate(particleSystemHits[i]);
+				particles.transform.position = transform.position;
 
-			Destroy(particles, 1.0f);
-			Destroy(this.gameObject);
+				Destroy(particles, 2.0f);
+				Destroy(this.gameObject);
+			}
         }
     }
 }
