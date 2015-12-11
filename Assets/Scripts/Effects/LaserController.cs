@@ -6,7 +6,7 @@ public class LaserController : MonoBehaviour {
 	public GameObject hitExplosion;
 	public GameObject hitSparks;
 	public GameObject debris;
-	public GameObject hitDecal;
+	public GameObject[] hitDecals;
 
 	private Vector3 lastPosition;
 
@@ -39,13 +39,13 @@ public class LaserController : MonoBehaviour {
 				Destroy(sparks, 2.0f);
 			}
 
-			if(hitDecal){
-				GameObject decal = Instantiate(hitDecal);
-				decal.transform.position = transform.position;
-				decal.transform.LookAt(direction);
-				decal.transform.Rotate(Vector3.right * 90.0f);
+			if(hitDecals.Length > 0){
+				GameObject decal = Instantiate(hitDecals[Random.Range(0, hitDecals.Length)]);
+				decal.transform.position = transform.position + (0.5f * normal);
+				decal.transform.LookAt(transform.position);
+				// decal.transform.Rotate(decal.transform.up * Random.Range(0.0f, 360.0f));
 
-				Debug.DrawRay(decal.transform.position, decal.transform.right * 10.0f, Color.red);
+				Debug.DrawRay(decal.transform.position, decal.transform.forward * 10.0f, Color.red);
 
 				Destroy(decal, 10.0f);
 			}
