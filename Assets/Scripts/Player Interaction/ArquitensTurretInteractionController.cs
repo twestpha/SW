@@ -8,12 +8,20 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 	public GameObject playerObject;
 
 	[Header("Primary Turret")]
-	public GameObject primaryTurretObject; // Needs splitup into rotation
+	public GameObject primaryTurretObject;
 	public GameObject primaryGunObject;
 	public GameObject primaryCameraParent;
 	public GameObject primaryTurretCamera;
 	public GameObject[] upperPrimaryEmissionPoints;
 	public GameObject[] lowerPrimaryEmissionPoints;
+
+	[Header("Secondary Turret")]
+	public GameObject secondaryTurretObject;
+	public GameObject secondaryGunObject;
+	public GameObject secondaryCameraParent;
+	public GameObject secondaryTurretCamera;
+	public GameObject[] upperSecondaryEmissionPoints;
+	public GameObject[] lowerSecondaryEmissionPoints;
 
 	[Header("Instantiation Objects")]
 	public GameObject laserBolt;
@@ -35,9 +43,11 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 	public float rangeInMeters;
 	public float weaponCooldown;
 	public float recoilAmount = 0.2f;
+	public float intersectionAngle = 0.0f;
 
 	// Private Variables
 	private bool playerInTurret;
+	private bool inUpperTurret;
 	private float rotationY = 0.0f;
 
 	private float lastShotTime;
@@ -45,7 +55,7 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 	private Vector3 primaryGunOriginalPosition;
 
 	private bool useUpperEmitPoints;
-	private bool recoiling;
+	private bool primaryTurretRecoiling;
 
 	// Constants
 	private const float INTERACTION_DISTANCE = 10.0f;
@@ -53,8 +63,10 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 
 	void Start () {
 		playerInTurret = false;
+		inUpperTurret = true;
+
 		useUpperEmitPoints = true;
-		recoiling = false;
+		primaryTurretRecoiling = false;
 
 		primaryGunOriginalPosition = primaryGunObject.transform.localPosition;
 	}
@@ -83,12 +95,24 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 	//####################################################################
 
 	void FireWeapon(){
-		createAndFireUpperLasers();
-		// lower lasers
-		flashLights();
-		// play sound
-		recoiling = true;
-		useUpperEmitPoints = !useUpperEmitPoints;
+		bool shouldFirePrimary = inUpperTurret || rotationY >= intersectionAngle;
+		bool shouldFireSecondary = !inUpperTurret || rotationY >= intersectionAngle;
+
+		if(shouldFirePrimary){
+			createAndFirePrimaryLasers();
+			flashPrimaryLights();
+			primaryTurretRecoiling = true;
+		}
+
+		if(shouldFireSecondary){
+			createAndFireSecondaryLasers();
+		}
+
+		if(shouldFirePrimary || shouldFireSecondary){
+			lastShotTime = Time.time;
+			useUpperEmitPoints = !useUpperEmitPoints;
+			// play sound
+		}
 	}
 
 	void EnterTurret(){
@@ -100,7 +124,7 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 	void ExitTurret(){
 		playerInTurret = false;
 		SetPlayerLocation();
-		recoiling = false;
+		primaryTurretRecoiling = false;
 	}
 
 	//####################################################################
@@ -114,12 +138,16 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 		rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
 
 		primaryTurretObject.transform.localEulerAngles = new Vector3(270, rotationX, 0);
+		secondaryTurretObject.transform.localEulerAngles = new Vector3(90, rotationX, 0);
+
 		primaryGunObject.transform.localEulerAngles = new Vector3(0, rotationY, 0);
+		secondaryGunObject.transform.localEulerAngles = new Vector3(0, rotationY, 0);
+
 		primaryCameraParent.transform.localEulerAngles = new Vector3(0, rotationY, 0);
 	}
 
 	void handleRecoil(){
-		if(recoiling){
+		if(primaryTurretRecoiling){
 			float percentTimeElapsed = (Time.time - lastShotTime) / weaponCooldown;
 
 			float recoil_distance = (recoilAmount * Mathf.Sin(2.0f * percentTimeElapsed * Mathf.PI));
@@ -132,9 +160,9 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 
 			primaryGunObject.transform.localPosition = newPosition;
 
-			recoiling = percentTimeElapsed < 0.5f;
+			primaryTurretRecoiling = percentTimeElapsed < 0.5f;
 		}
-		if(!recoiling){
+		if(!primaryTurretRecoiling){
 			primaryGunObject.transform.localPosition = primaryGunOriginalPosition;
 		}
 	}
@@ -166,7 +194,7 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 		playerCamera.GetComponent<Camera>().enabled = !playerInTurret;
 	}
 
-	void createAndFireUpperLasers(){
+	void createAndFirePrimaryLasers(){
 		GameObject boltA = Instantiate(laserBolt);
 		GameObject boltB = Instantiate(laserBolt);
 
@@ -182,7 +210,28 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 			boltB.transform.position = lowerPrimaryEmissionPoints[1].transform.position;
 		}
 
-		lastShotTime = Time.time;
+		boltA.GetComponent<Rigidbody>().velocity = boltA.transform.right * projectileSpeed;
+		boltB.GetComponent<Rigidbody>().velocity = boltB.transform.right * projectileSpeed;
+
+		Destroy(boltA, rangeInMeters * (1 / projectileSpeed));
+		Destroy(boltB, rangeInMeters * (1 / projectileSpeed));
+	}
+
+	void createAndFireSecondaryLasers(){
+		GameObject boltA = Instantiate(laserBolt);
+		GameObject boltB = Instantiate(laserBolt);
+
+		boltA.transform.localEulerAngles = new Vector3(0, secondaryTurretObject.transform.localEulerAngles.y, rotationY);
+		boltB.transform.localEulerAngles = new Vector3(0, secondaryTurretObject.transform.localEulerAngles.y, rotationY);
+
+
+		if(useUpperEmitPoints){
+			boltA.transform.position = upperSecondaryEmissionPoints[0].transform.position;
+			boltB.transform.position = upperSecondaryEmissionPoints[1].transform.position;
+		} else {
+			boltA.transform.position = lowerSecondaryEmissionPoints[0].transform.position;
+			boltB.transform.position = lowerSecondaryEmissionPoints[1].transform.position;
+		}
 
 		boltA.GetComponent<Rigidbody>().velocity = boltA.transform.right * projectileSpeed;
 		boltB.GetComponent<Rigidbody>().velocity = boltB.transform.right * projectileSpeed;
@@ -191,7 +240,7 @@ public class ArquitensTurretInteractionController : MonoBehaviour {
 		Destroy(boltB, rangeInMeters * (1 / projectileSpeed));
 	}
 
-	void flashLights(){
+	void flashPrimaryLights(){
 		GameObject lightFlashA = Instantiate(lightFlash);
 		GameObject lightFlashB = Instantiate(lightFlash);
 
