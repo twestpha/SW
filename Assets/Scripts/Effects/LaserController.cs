@@ -6,6 +6,7 @@ public class LaserController : MonoBehaviour {
 	public GameObject hitExplosion;
 	public GameObject hitSparks;
 	public GameObject debris;
+	public GameObject smoke;
 	public GameObject[] hitDecals;
 
 	private Vector3 lastPosition;
@@ -48,6 +49,13 @@ public class LaserController : MonoBehaviour {
 				Debug.DrawRay(decal.transform.position, decal.transform.forward * 10.0f, Color.red);
 
 				Destroy(decal, 10.0f);
+			}
+
+			if(smoke){
+				GameObject newSmoke = Instantiate(smoke);
+				newSmoke.transform.position = transform.position;
+
+				Destroy(newSmoke, 20.0f);
 			}
 
 			Destroy(this.gameObject);
