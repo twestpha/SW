@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 505d11b03a2ba614eb5697b073684806
-timeCreated: 1449904884
+timeCreated: 1449946279
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -12,22 +12,32 @@ ModelImporter:
     100008: Cylinder_003
     100010: Cylinder_004
     100012: Cylinder_005
-    100014: Flash_Suppresor
-    100016: Flash_Suppressor_Grip
-    100018: Flathead_Screw
-    100020: Flathead_Screw_001
-    100022: Flathead_Screw_002
-    100024: Flathead_Screw_003
-    100026: Handgrip
-    100028: Magazine
-    100030: Magazine_Details
-    100032: Main_Barrel
-    100034: Plane_002
-    100036: Rear_Clamp
-    100038: Receiver
-    100040: Receiver_Side_Panel
-    100042: //RootNode
-    100044: Tirgger
+    100014: Cylinder_006
+    100016: Flash_Suppresor
+    100018: Flash_Suppressor_Grip
+    100020: Flathead_Screw
+    100022: Flathead_Screw_001
+    100024: Flathead_Screw_002
+    100026: Flathead_Screw_003
+    100028: Handgrip
+    100030: Ironsights
+    100032: Magazine
+    100034: Magazine_Details
+    100036: Main_Barrel
+    100038: Plane_002
+    100040: Rear_Clamp
+    100042: Receiver
+    100044: Receiver_Sheath
+    100046: Receiver_Side_Panel
+    100048: Reciever_Knob
+    100050: Scope_Pylon
+    100052: //RootNode
+    100054: Sight_Clamp
+    100056: Sight_Clamp_001
+    100058: Sight_Grip
+    100060: Sight_Knob_Grip
+    100062: Sight_Knob_Inner
+    100064: Tirgger
     400000: Butt_Grip
     400002: Cylinder
     400004: Cylinder_001
@@ -35,22 +45,32 @@ ModelImporter:
     400008: Cylinder_003
     400010: Cylinder_004
     400012: Cylinder_005
-    400014: Flash_Suppresor
-    400016: Flash_Suppressor_Grip
-    400018: Flathead_Screw
-    400020: Flathead_Screw_001
-    400022: Flathead_Screw_002
-    400024: Flathead_Screw_003
-    400026: Handgrip
-    400028: Magazine
-    400030: Magazine_Details
-    400032: Main_Barrel
-    400034: Plane_002
-    400036: Rear_Clamp
-    400038: Receiver
-    400040: Receiver_Side_Panel
-    400042: //RootNode
-    400044: Tirgger
+    400014: Cylinder_006
+    400016: Flash_Suppresor
+    400018: Flash_Suppressor_Grip
+    400020: Flathead_Screw
+    400022: Flathead_Screw_001
+    400024: Flathead_Screw_002
+    400026: Flathead_Screw_003
+    400028: Handgrip
+    400030: Ironsights
+    400032: Magazine
+    400034: Magazine_Details
+    400036: Main_Barrel
+    400038: Plane_002
+    400040: Rear_Clamp
+    400042: Receiver
+    400044: Receiver_Sheath
+    400046: Receiver_Side_Panel
+    400048: Reciever_Knob
+    400050: Scope_Pylon
+    400052: //RootNode
+    400054: Sight_Clamp
+    400056: Sight_Clamp_001
+    400058: Sight_Grip
+    400060: Sight_Knob_Grip
+    400062: Sight_Knob_Inner
+    400064: Tirgger
     2300000: Butt_Grip
     2300002: Cylinder
     2300004: Cylinder_001
@@ -58,21 +78,31 @@ ModelImporter:
     2300008: Cylinder_003
     2300010: Cylinder_004
     2300012: Cylinder_005
-    2300014: Flash_Suppresor
-    2300016: Flash_Suppressor_Grip
-    2300018: Flathead_Screw
-    2300020: Flathead_Screw_001
-    2300022: Flathead_Screw_002
-    2300024: Flathead_Screw_003
-    2300026: Handgrip
-    2300028: Magazine
-    2300030: Magazine_Details
-    2300032: Main_Barrel
-    2300034: Plane_002
-    2300036: Rear_Clamp
-    2300038: Receiver
-    2300040: Receiver_Side_Panel
-    2300042: Tirgger
+    2300014: Cylinder_006
+    2300016: Flash_Suppresor
+    2300018: Flash_Suppressor_Grip
+    2300020: Flathead_Screw
+    2300022: Flathead_Screw_001
+    2300024: Flathead_Screw_002
+    2300026: Flathead_Screw_003
+    2300028: Handgrip
+    2300030: Ironsights
+    2300032: Magazine
+    2300034: Magazine_Details
+    2300036: Main_Barrel
+    2300038: Plane_002
+    2300040: Rear_Clamp
+    2300042: Receiver
+    2300044: Receiver_Sheath
+    2300046: Receiver_Side_Panel
+    2300048: Reciever_Knob
+    2300050: Scope_Pylon
+    2300052: Sight_Clamp
+    2300054: Sight_Clamp_001
+    2300056: Sight_Grip
+    2300058: Sight_Knob_Grip
+    2300060: Sight_Knob_Inner
+    2300062: Tirgger
     3300000: Butt_Grip
     3300002: Cylinder
     3300004: Cylinder_001
@@ -80,43 +110,63 @@ ModelImporter:
     3300008: Cylinder_003
     3300010: Cylinder_004
     3300012: Cylinder_005
-    3300014: Flash_Suppresor
-    3300016: Flash_Suppressor_Grip
-    3300018: Flathead_Screw
-    3300020: Flathead_Screw_001
-    3300022: Flathead_Screw_002
-    3300024: Flathead_Screw_003
-    3300026: Handgrip
-    3300028: Magazine
-    3300030: Magazine_Details
-    3300032: Main_Barrel
-    3300034: Plane_002
-    3300036: Rear_Clamp
-    3300038: Receiver
-    3300040: Receiver_Side_Panel
-    3300042: Tirgger
-    4300000: Cylinder_005
-    4300002: Cylinder_004
-    4300004: Cylinder_003
-    4300006: Cylinder_002
-    4300008: Cylinder_001
-    4300010: Cylinder
-    4300012: Flathead_Screw_003
-    4300014: Flathead_Screw_002
-    4300016: Flathead_Screw_001
-    4300018: Flathead_Screw
-    4300020: Receiver_Side_Panel
-    4300022: Handgrip
-    4300024: Tirgger
-    4300026: Rear_Clamp
-    4300028: Butt_Grip
-    4300030: Flash_Suppressor_Grip
-    4300032: Magazine_Details
-    4300034: Receiver
-    4300036: Magazine
-    4300038: Plane_002
-    4300040: Main_Barrel
-    4300042: Flash_Suppresor
+    3300014: Cylinder_006
+    3300016: Flash_Suppresor
+    3300018: Flash_Suppressor_Grip
+    3300020: Flathead_Screw
+    3300022: Flathead_Screw_001
+    3300024: Flathead_Screw_002
+    3300026: Flathead_Screw_003
+    3300028: Handgrip
+    3300030: Ironsights
+    3300032: Magazine
+    3300034: Magazine_Details
+    3300036: Main_Barrel
+    3300038: Plane_002
+    3300040: Rear_Clamp
+    3300042: Receiver
+    3300044: Receiver_Sheath
+    3300046: Receiver_Side_Panel
+    3300048: Reciever_Knob
+    3300050: Scope_Pylon
+    3300052: Sight_Clamp
+    3300054: Sight_Clamp_001
+    3300056: Sight_Grip
+    3300058: Sight_Knob_Grip
+    3300060: Sight_Knob_Inner
+    3300062: Tirgger
+    4300000: Sight_Grip
+    4300002: Sight_Knob_Grip
+    4300004: Sight_Clamp_001
+    4300006: Sight_Knob_Inner
+    4300008: Sight_Clamp
+    4300010: Cylinder_006
+    4300012: Scope_Pylon
+    4300014: Ironsights
+    4300016: Reciever_Knob
+    4300018: Receiver_Sheath
+    4300020: Cylinder_005
+    4300022: Cylinder_004
+    4300024: Cylinder_003
+    4300026: Cylinder_002
+    4300028: Cylinder_001
+    4300030: Cylinder
+    4300032: Flathead_Screw_003
+    4300034: Flathead_Screw_002
+    4300036: Flathead_Screw_001
+    4300038: Flathead_Screw
+    4300040: Receiver_Side_Panel
+    4300042: Handgrip
+    4300044: Tirgger
+    4300046: Rear_Clamp
+    4300048: Butt_Grip
+    4300050: Flash_Suppressor_Grip
+    4300052: Magazine_Details
+    4300054: Receiver
+    4300056: Magazine
+    4300058: Plane_002
+    4300060: Main_Barrel
+    4300062: Flash_Suppresor
     7400000: Default Take
     9500000: //RootNode
   materials:

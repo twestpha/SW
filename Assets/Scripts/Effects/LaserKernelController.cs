@@ -6,9 +6,11 @@ public class LaserKernelController : MonoBehaviour {
 	public float lifespan = 2;
 
 	private float startTime;
+	private float initialScale;
 
 	void Start(){
 		startTime = Time.time;
+		initialScale = transform.localScale.x;
 	}
 
 	void FixedUpdate(){
@@ -18,6 +20,7 @@ public class LaserKernelController : MonoBehaviour {
 
 
 		float scale = 1.0f - ((Time.time - startTime) / lifespan);
+		scale *= initialScale;
 		transform.localScale = new Vector3(scale, scale, scale);
 	}
 }

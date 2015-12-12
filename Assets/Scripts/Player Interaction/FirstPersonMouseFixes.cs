@@ -5,6 +5,8 @@ public class FirstPersonMouseFixes : MonoBehaviour {
 
 	public GameObject laserBolt;
 	public GameObject ejectionPoint;
+	public GameObject laserKernel;
+	public GameObject laserFlash;
 	public bool hasWeapon;
 	public float weaponCooldown;
 	public float projectileSpeed;
@@ -28,6 +30,26 @@ public class FirstPersonMouseFixes : MonoBehaviour {
 			GameObject bolt = Instantiate(laserBolt);
 			bolt.transform.rotation = ejectionPoint.transform.rotation;
 			bolt.transform.position = ejectionPoint.transform.position;
+
+			if(laserKernel){
+				GameObject kernel = Instantiate(laserKernel);
+				kernel.transform.position = ejectionPoint.transform.position;
+				kernel.transform.parent = ejectionPoint.transform;
+				kernel.transform.eulerAngles = new Vector3(
+					Random.Range(0.0f, 360.0f),
+					Random.Range(0.0f, 360.0f),
+					Random.Range(0.0f, 360.0f)
+				);
+			}
+
+			// laserFlash
+			if(laserFlash){
+				GameObject flash = Instantiate(laserFlash);
+				flash.transform.position = ejectionPoint.transform.position;
+				flash.transform.parent = ejectionPoint.transform;
+
+				Destroy(flash, 0.1f);
+			}
 
 			lastShotTime = Time.time;
 
