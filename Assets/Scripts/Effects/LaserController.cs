@@ -4,6 +4,7 @@ using System.Collections;
 public class LaserController : MonoBehaviour {
 
 	public GameObject hitExplosion;
+	public GameObject hitFlash;
 	public GameObject hitSparks;
 	public GameObject debris;
 	public GameObject smoke;
@@ -49,6 +50,13 @@ public class LaserController : MonoBehaviour {
 				Debug.DrawRay(decal.transform.position, decal.transform.forward * 10.0f, Color.red);
 
 				Destroy(decal, 10.0f);
+			}
+
+			if(hitFlash){
+				GameObject flash = Instantiate(hitFlash);
+				flash.transform.position = transform.position;
+
+				Destroy(flash, 0.1f);
 			}
 
 			if(smoke){
