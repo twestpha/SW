@@ -47,8 +47,6 @@ public class FirstPersonMouseFixes : MonoBehaviour {
 				GameObject flash = Instantiate(laserFlash);
 				flash.transform.position = ejectionPoint.transform.position;
 				flash.transform.parent = ejectionPoint.transform;
-
-				Destroy(flash, 0.1f);
 			}
 
 			lastShotTime = Time.time;

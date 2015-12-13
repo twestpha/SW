@@ -12,6 +12,10 @@ public class LaserController : MonoBehaviour {
 
 	private Vector3 lastPosition;
 
+	void Start(){
+		lastPosition = transform.position;
+	}
+
 	void FixedUpdate(){
 		lastPosition = transform.position;
 	}
@@ -44,10 +48,8 @@ public class LaserController : MonoBehaviour {
 			if(hitDecals.Length > 0){
 				GameObject decal = Instantiate(hitDecals[Random.Range(0, hitDecals.Length)]);
 				decal.transform.position = transform.position + (0.5f * normal);
+				// decal.transform.position = lastPosition;
 				decal.transform.LookAt(transform.position);
-				// decal.transform.Rotate(decal.transform.up * Random.Range(0.0f, 360.0f));
-
-				Debug.DrawRay(decal.transform.position, decal.transform.forward * 10.0f, Color.red);
 
 				Destroy(decal, 10.0f);
 			}

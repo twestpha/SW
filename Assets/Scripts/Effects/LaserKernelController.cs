@@ -18,7 +18,6 @@ public class LaserKernelController : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 
-
 		float scale = 1.0f - ((Time.time - startTime) / lifespan);
 		scale *= initialScale;
 		transform.localScale = new Vector3(scale, scale, scale);
